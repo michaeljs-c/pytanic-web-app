@@ -1,0 +1,24 @@
+h1, p {
+    color: #fff!important;
+    
+}
+h1 {
+    padding: 50px;
+}
+body {
+    background-color: RGBA(33,37,41,var(--bs-bg-opacity,1))!important;
+    text-align: center;
+    color: #fff!important;
+}
+img {
+    display: block;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;   
+    width: 600px;
+}
+#imagediv {
+    background-color: black;
+    
+}

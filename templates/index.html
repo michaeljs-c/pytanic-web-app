@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic</title>
+    {% load static %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1>Titanic Survival Predictor</h1>
+
+    <p>Enter your details below to determine if you would have lived or died on the Titanic. Hold me Jack.</p>
+    {% csrf_token %}
+    <!-- <form action="{% url 'result' %}">
+        <label for="">Title</label><br>
+        <select name="title" id="">
+            <option value="Mr">Mr</option>
+            <option value="Mrs">Mrs</option>
+            <option value="Dr">Dr</option>
+        </select><br>
+        
+        <label for="">Age</label><br>
+        <input type="text" name="age" value="2"><br>
+
+        <label for="">Gender</label><br>
+        <input type="radio" name="sex" id="" value="male" checked="checked">
+        <label for="">Male</label><br>
+        <input type="radio" name="sex" id="" value="female">
+        <label for="">Female</label><br>
+        
+        <label for="">Fare</label><br>
+        <input type="text" name="fare" value="2"><br>
+
+        <label for="">Ticket Class</label><br>
+        <select name="pclass" id="">
+            <option value="1">Upper</option>
+            <option value="2">Middle</option>
+            <option value="3">Lower</option>
+        </select><br>
+        
+        <label for="">Port of Embarkation</label><br>
+        <select name="embarked" id="">
+            <option value="C">Cherbourg</option>
+            <option value="Q">Queenstown</option>
+            <option value="S">Southampton</option>
+        </select><br>
+        
+        <label for="sibsp"># of siblings / spouses</label><br>
+        <input type="text" name="sibsp" value="2"><br>
+        
+        <label for="parch"># of parents / children</label><br>
+        <input type="text" name="parch" value="2"><br>
+
+        <input type="submit">
+    </form> -->
+
+    <div id="formdiv">
+        
+        <img id="titanic" src="{% static 'titanic.jpeg' %}" alt="">
+    <form action="{% url 'result' %}">
+        
+        
+        <div class="container w-50">
+            <label for="parch" required>Title</label><br>
+            <select name="title" class="form-select h-100 w-50" aria-label="Default select example" id="title" onchange="updateGender()" required>
+                <option selected value="">Select</option>
+                <option value="Mr">Mr</option>
+                <option value="Mrs">Mrs</option>
+                <option value="Miss">Miss</option>
+                <option value="Ms">Ms</option>
+                <option value="Master">Master</option>
+                <option value="Dr">Dr</option>
+                <option value="Don">Don</option>
+                <option value="Rev">Rev</option>
+                <option value="Mme">Madame</option>
+                <option value="Sir">Sir</option>
+                <option value="Lady">Lady</option>
+                <option value="Countess">Countess</option>
+                <option value="Major">Major</option>
+                <option value="Mile">Mile</option>
+                <option value="Col">Colonel</option>
+                <option value="Capt">Captain</option>
+                <option value="Jonkheer">Jonkheer</option>
+            </select>
+        </div>
+        
+
+        <div class="form-group">
+            <label for="">Age</label>
+            <input name="age" class="form-control w-50 p-1" id="" required>
+        </div>
+
+        <div id="genderdiv">
+            <label for="sex">Gender</label><br>
+            <input class="form-check-input" type="radio" name="sex" value="male" id="male" onclick="checkGender()" required>
+            <label class="form-check-label" for="">Male</label>
+            <input class="form-check-input" type="radio" name="sex" value="female" id="female" onclick="checkGender()" required>
+            <label class="form-check-label" for="">Female</label>
+        </div>
+
+        <div class="form-group">
+            <label for=""># of siblings / spouses</label>
+            <input name="sibsp" class="form-control w-50 p-1" id="" required>
+          </div>
+        <div class="form-group">
+            <label for=""># of parents / children</label>
+            <input name="parch" class="form-control w-50 p-1" id="" required>
+        </div>
+
+        <label for="">Ticket Price</label>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="512" value="10" class="slider" id="myRange" name="fare">
+        </div>
+        <p id="fareOutput"></p>
+
+        <!-- <div class="container w-50">
+            <label for="parch">Ticket Class</label><br>
+            <select name="pclass" class="form-select h-100 w-50" aria-label="Default select example">
+                <option selected>Select</option>
+                <option value="1">Upper</option>
+                <option value="2">Middle</option>
+                <option value="3">Lower</option>
+            </select>
+        </div>
+
+        <div class="container w-50">
+        <label for="parch">Port of Embarkation</label><br>
+        <select name="embarked" class="form-select h-100 w-50" aria-label="Default select example">
+            <option selected>Select</option>
+            <option value="C">Cherbourg</option>
+            <option value="Q">Queenstown</option>
+            <option value="S">Southampton</option>
+        </select>
+        </div> -->
+        <label for="parch">Ticket Class</label><br>
+        <input type="radio" class="btn-check" value="3" name="pclass" id="option1" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option1">Lower</label>
+
+        <input type="radio" class="btn-check" value="2" name="pclass" id="option2" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option2">Middle</label>
+
+        <input type="radio" class="btn-check" value="1" name="pclass" id="option3" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option3">Upper</label>
+        <br>
+
+        <label for="parch">Port of Embarkation</label><br>
+
+        
+        <input type="radio" class="btn-check" value="C" name="embarked" id="option4" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option4">Cherbourg</label>
+
+        <input type="radio" class="btn-check" value="Q" name="embarked" id="option5" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option5">Queenstown</label>
+
+        <input type="radio" class="btn-check" value="S" name="embarked" id="option6" autocomplete="off" required>
+        <label class="btn btn-outline-secondary" for="option6">Southampton</label>
+        <br>
+
+
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+
+    <script src="{% static 'index.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
